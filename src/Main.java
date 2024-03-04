@@ -9,6 +9,7 @@ import java.io.FileWriter;
 public class Main {
     public static void main(String[] args) {
         String[][] maze = getMaze("data/maze1");
+        System.out.println(solver(maze));
 
     }
     public static String[][] getMaze(String fileName) {
@@ -40,3 +41,45 @@ public class Main {
         return maze;
 
     }
+    public static String solver(String[][] maze){
+        String path="(0,0)--->";
+        int endRow=maze.length-1;
+        int endCol=maze[maze.length-1].length-1;
+        int col=0;
+        int row=0;
+
+        while(col!=endCol || row!=endRow){
+
+            if(col-1 >0 && maze[row][col-1].equals(".") && !maze[row][col-1].equals("X")){
+                maze[row][col]="X";
+                col=col-1;
+                path+="("+row+","+col+")--->";
+
+            }
+            else if(col+1 < maze[0].length && maze[row][col+1].equals(".") && !maze[row][col+1].equals("X") ){
+                maze[row][col]="X";
+                col=col+1;
+                path+="("+row+","+col+")--->";
+            }
+
+            else if(row-1>0 && maze[row-1][col].equals(".") && !maze[row-1][col].equals("X")){
+                maze[row][col]="X";
+                row = row - 1;
+                path+="("+row+","+col+")--->";
+            }
+
+
+            else {
+                maze[row][col]="X";
+                row=row+1;
+                path+="("+row+","+col+")--->";
+            }
+
+
+        }
+        path=path.substring(0,path.length()-4);
+
+
+        return path;
+    }
+}
