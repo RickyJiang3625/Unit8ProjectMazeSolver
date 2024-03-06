@@ -9,7 +9,10 @@ import java.io.FileWriter;
 public class Main {
     public static void main(String[] args) {
         String[][] maze = getMaze("data/maze1");
-        System.out.println(solver(maze));
+        //System.out.println(solver(maze));
+        Maze maze1=new Maze(maze);
+
+        System.out.println(maze1.solve());
 
     }
     public static String[][] getMaze(String fileName) {
@@ -69,10 +72,22 @@ public class Main {
             }
 
 
-            else {
+            else if(row+1<maze.length && maze[row+1][col].equals(".")){
                 maze[row][col]="X";
                 row=row+1;
                 path+="("+row+","+col+")--->";
+            }
+            else{
+                for(int i=0;i< maze.length;i++){
+                    for(int j=0;j< maze[0].length;j++){
+                        if(maze[i][j].equals(">")){
+                            maze[i][j]=".";
+                        }
+                    }
+                }
+                col=0;
+                row=0;
+                path="(0,0)--->";
             }
 
 
